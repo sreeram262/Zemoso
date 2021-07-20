@@ -1,0 +1,22 @@
+sql-2(mysql)
+
+
+1.select name,count(*) number,'yes' as 'Deleted scenes' from film f1,film_category f2,category c 
+where f1.film_id=f2.film_id and f2.category_id=6 and 
+f2.category_id=c.category_id and special_features like '%Deleted Scenes%';
+
+doucmentaries have the id 6
+
+2.select 'Jon Stephens' as Name,'Sci-fi' as Genre,count(*) as total from rental r,inventory i,film_category f1 where r.inventory_id=i.inventory_id and i.film_id=f1.film_id and  f1.category_id=14 and i.store_id=(select store_id from store s1 where s1.manager_staff_id=(select staff_id from staff where first_name='Jon' and last_name='Stephens'));
+
+Sci-fi has the id 14
+
+3.select 'Animation' as Genre,count(*) as 'total sales' from rental r,inventory i,film_category f1 where r.inventory_id=i.inventory_id and i.film_id=f1.film_id and f1.category_id=2 ;
+
+Animation has id 2
+
+4.select name as category,count(*) as total from rental r,inventory i,film_category f1,category c where r.inventory_id=i.inventory_id and i.film_id=f1.film_id and f1.category_id=c.category_id and r.customer_id=(select customer_id from customer c where first_name='PATRICIA' and last_name='JOHNSON') group by name order by total desc limit 3;
+
+patricia johnson is a customer
+
+5.select 'R' as category,count(*) as total,r.customer_id from rental r,inventory i,film_category f1,film f2 where r.inventory_id=i.inventory_id and i.film_id=f1.film_id and f1.film_id=f2.film_id and f2.rating='R' and r.customer_id=(select customer_id from customer c where first_name='SUSAN' and last_name='WILSON') group by r.customer_id;	
