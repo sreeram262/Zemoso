@@ -9,5 +9,13 @@ public class Car {
     {
         System.out.println("prints all the details");
     }
+    public void accelerate()
+    {
+        System.out.println("car accelerates");
+    }
+    public void makeTurning()
+    {
+        System.out.println("turn the wheels left/right");
+    }
 
 }
