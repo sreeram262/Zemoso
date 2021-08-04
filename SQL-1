@@ -1,0 +1,30 @@
+sql-1(mysql)
+
+*Can use distinct key word to eliminate duplicates but I did not so that we can analyse why we have duplicates.*
+
+1.select f1.film_id,f2.title from film_category f1,film f2 where f1.film_id=f2.film_id 
+and rating='PG-13' and category_id=
+(select category_id from category where name='comedy');
+
+2.select r.inventory_id,count(*) as number,f1.film_id,title from rental r,inventory i,film_category f1,film f2 where r.inventory_id=i.inventory_id and i.film_id=f1.film_id and f1.film_id=f2.film_id and f1.category_id=11 group by r.inventory_id order by number desc,r.inventory_id asc limit 3;
+May show the same movie name more than once because the same movie has more than 1 inventory id
+Usage:
+rental-inventory_id,inventory-inventory_id,film_id,film-film_id,title,film_category ,horror is 11
+
+3. select first_name,last_name,country from rental r,inventory i,customer cust,
+city c1,country c2,film_category f,address a where r.inventory_id=i.inventory_id 
+and i.film_id=f.film_id and f.category_id=15 and r.customer_id=cust.customer_id 
+and cust.address_id=a.address_id and a.city_id=c1.city_id and c1.country_id=c2.country_id and c2.country='India';
+May show repeated names because the same customer may have rented more than once
+
+4.select first_name,last_name,country from rental r,inventory i,customer cust,
+city c1,country c2,film_actor f,address a where r.inventory_id=i.inventory_id 
+and i.film_id=f.film_id and f.actor_id=2 and r.customer_id=cust.customer_id 
+and cust.address_id=a.address_id and a.city_id=c1.city_id and c1.country_id=c2.country_id and c2.country='Canada';
+
+NICK WAHLBERG is having actor_id 2 in actor table
+
+5.select f.actor_id,first_name,last_name,count(film_id) from film_actor f,actor a 
+where f.actor_id=a.actor_id and f.actor_id=72 group by f.actor_id;
+
+actor_id of Sean Williams is 72
